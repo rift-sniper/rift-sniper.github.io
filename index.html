@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rift Sniper - Joining Roblox Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Joining Roblox Game...</h1>
+        <p>If you aren't redirected automatically, <a id="manualLink" href="#">click here</a> to join the game.</p>
+        <p>If Roblox isn't installed, you can download it from the <a href="https://www.roblox.com/download">official site</a>.</p>
+        <p class="note">Note: If you see a prompt, click "Open Roblox Game Client" and check "Always allow" to avoid this in the future.</p>
+    </div>
+
+    <script>
+        // Function to extract a query parameter from the URL
+        function getParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Extract placeID and gameInstanceId
+        const placeId = getParam("placeID");
+        const gameInstanceId = getParam("gameInstanceId");
+
+        // Validate the parameters
+        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+        if (!placeId) {
+            document.querySelector('.container').innerHTML = `
+                <h1>Error</h1>
+                <p>Missing placeID in URL!</p>
+            `;
+        } else if (gameInstanceId && !uuidRegex.test(gameInstanceId)) {
+            document.querySelector('.container').innerHTML = `
+                <h1>Error</h1>
+                <p>Invalid game instance ID. Please check the link and try again.</p>
+            `;
+        } else {
+            // Construct the roblox:// link
+            let robloxUrl = `roblox://placeID=${placeId}`;
+            if (gameInstanceId) {
+                robloxUrl += `&gameInstanceId=${gameInstanceId}`;
+            }
+
+            // Set the manual link href
+            document.getElementById('manualLink').href = robloxUrl;
+
+            // Attempt to redirect automatically
+            window.location.href = robloxUrl;
+
+            // Fallback: If the redirect doesn't work after 3 seconds, show a message
+            setTimeout(() => {
+                document.querySelector('.container').innerHTML = `
+                    <h1>Redirect Failed</h1>
+                    <p>Automatic redirect failed. Please <a href="${robloxUrl}">click here</a> to join the game manually.</p>
+                    <p>If Roblox isn't installed, download it from the <a href="https://www.roblox.com/download">official site</a>.</p>
+                    <p class="note">Note: If you saw a prompt, click "Open Roblox Game Client" and check "Always allow" to avoid this in the future.</p>
+                `;
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
