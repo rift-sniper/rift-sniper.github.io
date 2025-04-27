@@ -42,9 +42,17 @@
 <body>
     <div class="container">
         <h1>Joining Roblox Game...</h1>
-        <p>If you aren't redirected automatically, <a id="manualLink" href="#">click here</a> to join the game.</p>
-        <p>If Roblox isn't installed, you can download it from the <a href="https://www.roblox.com/download">official site</a>.</p>
+        <p>We’re attempting to redirect you to Roblox. If it doesn’t work, <a id="manualLink" href="#">click here</a> to join the game.</p>
+        <h2 class="error">Redirect Failed?</h2>
+        <p>If you weren't redirected to Roblox, here are possible reasons and solutions:</p>
+        <ul style="text-align: left; margin: 0 auto; max-width: 400px;">
+            <li><strong>Roblox Not Installed</strong>: Ensure Roblox is installed. <a href="https://www.roblox.com/download">Download it here</a>.</li>
+            <li><strong>Popup Declined</strong>: If you saw a prompt asking to open Roblox, click "Open Roblox Game Client" and check "Always allow" to avoid this in the future.</li>
+            <li><strong>Browser Settings</strong>: Some browsers may block custom protocol links. Check your browser settings to allow "roblox://" links.</li>
+            <li><strong>Manual Redirect</strong>: Try clicking the link above to join the game.</li>
+        </ul>
         <p class="note">Note: If you see a prompt, click "Open Roblox Game Client" and check "Always allow" to avoid this in the future.</p>
+        <p>You can close this tab manually if you're done.</p>
     </div>
 
     <script>
@@ -83,21 +91,6 @@
 
             // Attempt to redirect automatically
             window.location.href = robloxUrl;
-
-            // After 3 seconds, show the "Redirect failed?" message with reasons and solutions
-            setTimeout(() => {
-                document.querySelector('.container').innerHTML = `
-                    <h1 class="error">Redirect Failed?</h1>
-                    <p>If you weren't redirected to Roblox, here are possible reasons and solutions:</p>
-                    <ul style="text-align: left; margin: 0 auto; max-width: 400px;">
-                        <li><strong>Roblox Not Installed</strong>: Ensure Roblox is installed. <a href="https://www.roblox.com/download">Download it here</a>.</li>
-                        <li><strong>Popup Declined</strong>: If you saw a prompt asking to open Roblox, click "Open Roblox Game Client" and check "Always allow" to avoid this in the future.</li>
-                        <li><strong>Browser Settings</strong>: Some browsers may block custom protocol links. Check your browser settings to allow "roblox://" links.</li>
-                        <li><strong>Manual Redirect</strong>: Try clicking this link to join the game: <a href="${robloxUrl}">Join Game</a>.</li>
-                    </ul>
-                    <p>You can close this tab manually if you're done.</p>
-                `;
-            }, 3000);
         }
     </script>
 </body>
