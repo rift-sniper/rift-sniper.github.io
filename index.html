@@ -34,9 +34,6 @@
             color: #666;
             margin-top: 10px;
         }
-        .success {
-            color: #28a745;
-        }
         .error {
             color: #dc3545;
         }
@@ -99,29 +96,25 @@
             // Attempt to redirect automatically
             window.location.href = robloxUrl;
 
-            // Assume success unless the user interacts with the manual link
-            const successTimeout = setTimeout(() => {
+            // After 3 seconds, show the "Redirect failed?" message with reasons and solutions
+            setTimeout(() => {
                 document.querySelector('.container').innerHTML = `
-                    <h1 class="success">Redirect Successful</h1>
-                    <p>Successfully joined the Roblox game! This tab will close in 5 seconds.</p>
+                    <h1 class="error">Redirect Failed?</h1>
+                    <p>If you weren't redirected to Roblox, here are possible reasons and solutions:</p>
+                    <ul style="text-align: left; margin: 0 auto; max-width: 400px;">
+                        <li><strong>Roblox Not Installed</strong>: Ensure Roblox is installed. <a href="https://www.roblox.com/download">Download it here</a>.</li>
+                        <li><strong>Popup Declined</strong>: If you saw a prompt asking to open Roblox, click "Open Roblox Game Client" and check "Always allow" to avoid this in the future.</li>
+                        <li><strong>Browser Settings</strong>: Some browsers may block custom protocol links. Check your browser settings to allow "roblox://" links.</li>
+                        <li><strong>Manual Redirect</strong>: Try clicking this link to join the game: <a href="${robloxUrl}">Join Game</a>.</li>
+                    </ul>
+                    <p>This tab will close in 30 seconds.</p>
                     <button onclick="window.close()">Close Now</button>
                 `;
-                // Auto-close the tab after 5 seconds
+                // Auto-close the tab after 30 seconds
                 setTimeout(() => {
                     window.close();
-                }, 5000);
+                }, 30000);
             }, 3000);
-
-            // If the user clicks the manual link, assume the redirect failed
-            manualLink.addEventListener('click', () => {
-                clearTimeout(successTimeout); // Cancel the success message
-                document.querySelector('.container').innerHTML = `
-                    <h1 class="error">Redirect Failed</h1>
-                    <p>Automatic redirect failed. Please <a href="${robloxUrl}">click here</a> to join the game manually.</p>
-                    <p>If Roblox isn't installed, download it from the <a href="https://www.roblox.com/download">official site</a>.</p>
-                    <p class="note">Note: If you saw a prompt, click "Open Roblox Game Client" and check "Always allow" to avoid this in the future.</p>
-                `;
-            });
         }
     </script>
 </body>
