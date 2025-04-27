@@ -37,18 +37,6 @@
         .error {
             color: #dc3545;
         }
-        button {
-            background-color: #1e90ff;
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        button:hover {
-            background-color: #007bff;
-        }
     </style>
 </head>
 <body>
@@ -107,13 +95,8 @@
                         <li><strong>Browser Settings</strong>: Some browsers may block custom protocol links. Check your browser settings to allow "roblox://" links.</li>
                         <li><strong>Manual Redirect</strong>: Try clicking this link to join the game: <a href="${robloxUrl}">Join Game</a>.</li>
                     </ul>
-                    <p>This tab will close in 30 seconds.</p>
-                    <button onclick="window.close()">Close Now</button>
+                    <p>You can close this tab manually if you're done.</p>
                 `;
-                // Auto-close the tab after 30 seconds
-                setTimeout(() => {
-                    window.close();
-                }, 30000);
             }, 3000);
         }
     </script>
